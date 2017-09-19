@@ -1,8 +1,18 @@
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import java.util.*;
-
-class AstarTools{
-
-	public class node{
+/**
+ *
+ * @author ankur
+ */
+public class AstarTools {
+    
+    public class node{
 		ArrayList<Integer> path = new ArrayList<Integer>();
 		int cost, pathLength;	
 
@@ -11,6 +21,13 @@ class AstarTools{
 			this.cost = cost;
 			this.pathLength = pathLength;
 		}
+                
+                node(node n){
+                    this.path = n.path;
+                    this.cost = n.cost;
+                    this.pathLength = n.pathLength;
+                
+                }
 
 		public String toString(){
 			int i;
@@ -18,7 +35,7 @@ class AstarTools{
 			for(i = 0; i < this.path.size(); i++)
 				result.append(this.path.get(i).toString());
 
-			return result+" cost: "+this.cost+" path length: "+this.pathLength;
+			return result+" cost: "+this.cost+"\t path length: "+this.pathLength;
 		}
 
 		public Boolean goalState(int[] h){
@@ -32,13 +49,13 @@ class AstarTools{
 		
 	}
 
-	public class Visited{
+	public class Visited {
 		ArrayList<node> visited = new ArrayList<node>();
 		
 		public Boolean add(node n){
 			node temp;
 			int i;
-			System.out.println(visited.size());
+			//System.out.println(visited.size());
 			if(visited.size() == 0){
 				visited.add(n);
 				return true;
@@ -46,7 +63,7 @@ class AstarTools{
 			//Iterator itr = visited.iterator();
 			for(i= 0; i < visited.size(); i++){
 				//temp = itr.next();
-				System.out.println(n.path.size());
+				//System.out.println(n.path.size());
 				if(n.path.get(n.path.size() - 1) == visited.get(i).path.get(visited.get(i).path.size() - 1)){
 					if(n.cost < visited.get(i).cost){    //node cost < already visited cost.
 						visited.set(i,n);
@@ -68,7 +85,7 @@ class AstarTools{
 			StringBuilder sb = new StringBuilder();
 			while(itr.hasNext()){
 				temp =(node) itr.next();
-				sb.append(temp.toString());
+				sb.append(temp.toString()+"\n");
 				//System.out.println(temp.print());				
 			}
 			return sb.toString();
@@ -107,11 +124,15 @@ class AstarTools{
 			StringBuilder sb = new StringBuilder();
 			while(itr.hasNext()){
 				temp =(node) itr.next();
-				sb.append(temp.toString()+"\t");
+				sb.append(temp.toString()+"\n");
 				//System.out.println(temp.print());				
 			}
 			return sb.toString();
 		}	
+
+                public void remove(node n) {
+                    generated.remove(n);
+                }
 
 	}
 
