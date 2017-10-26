@@ -1,3 +1,7 @@
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+
 ########## FUNCTIONS #############
 
 def unify(ar1, ar2):
@@ -20,34 +24,52 @@ def isVariable(v):
 	return v.islower() and v.isalpha and lenght
 
 
-def unified_predicate(l1):
-	global dict_sub
-	result = []
-	for atom in l1:
-		if atom in dict_sub.keys():
-			atom = dict_sub[atom]
-			result.append(atom)
+def unified_predicate(text1, dict_sub):
+	text = text1
+	for atom in dict_sub.keys():
+		if atom in text1:
+			text = text.replace(atom, dict_sub[atom])
+		'''
 		else:
 			result.append(atom)
-	return result
+		'''
+	return text
 		
 
 ######### MAIN #########################
 
+#text1 = raw_input("Enter the first sentence\t")
+#text2 = raw_input("Enter the first sentence\t")
+stop_words = set(stopwords.words('english'))
+ps = PorterStemmer()
+
+text1= "ankur is playing x"
+text2 = "w plays football"
+
+tokens = word_tokenize(text1)
+l1 = []
+for w in tokens:
+	if w not in stop_words:
+		l1.append(str(ps.stem(w)))
+
+tokens = word_tokenize(text2)
+l2 = []
+for w in tokens:
+	if w not in stop_words:
+		l2.append(str(ps.stem(w)))
+
 dict_sub = {}
-l1= ['hate', 'y', 'ceasar']
-l2= ['hate', 'marcus', 'x']
 result=[]
 
-if len(l1)==len(l2) and l1[0]==l2[0]:
-	for i in range(1, len(l1)):
+print "l1:\t"+str(l1)
+print "l2:\t"+ str(l2)	
+
+if len(l1)==len(l2): 
+	for i in range(0, len(l1)):
 		if len(unify(l1[i], l2[i])) != 0: 
 			result.append(unify(l1[i], l2[i]))
-	print "l1:\t"+str(l1)
-	print "l2:\t"+ str(l2)	
 	print "subst:\t"+str(result)	
 	#print dict_sub
-	print "result:\t"+str(unified_predicate(l1))
+	print "result:\t"+str(unified_predicate(text1, dict_sub))
 else:
 	print "predicate didnt match or lenght not equal"
-
