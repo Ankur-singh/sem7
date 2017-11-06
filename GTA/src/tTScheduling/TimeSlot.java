@@ -1,4 +1,4 @@
-package dynamicTT;
+package tTScheduling;
 
 public class TimeSlot {
 	//private int slotTime;

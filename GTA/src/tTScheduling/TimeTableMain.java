@@ -1,4 +1,4 @@
-package dynamicTT;
+package tTScheduling;
 
 import java.io.IOException;
 

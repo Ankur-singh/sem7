@@ -1,4 +1,4 @@
-package dynamicTT;
+package tTScheduling;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.Iterator;
 
 public class Initialization {
 	
-	//this class takes all inputs from a file. courseID, courseName, roomID's, subjects and professors associated with course
-	//currently hardcoded by taking one course with 6 subjects and 6 teachers
+	//this class should take all inputs from a file. courseID, courseName, roomID's, subjects and professors associated with course
+	//but currently hardcoded by taking one course with 6 subjects and 6 teachers
 	
-	private ArrayList<Subject> subjects=new ArrayList();
-	private ArrayList<Professor> professors=new ArrayList();
-	private ArrayList<TimeTable> timetables=new ArrayList();
+	private ArrayList<Subject> subjects=new ArrayList<Subject>();
+	private ArrayList<Professor> professors=new ArrayList<Professor>();
+	private ArrayList<TimeTable> timetables=new ArrayList<TimeTable>();
 	private ArrayList<Lecture> classes=new ArrayList<>();
-	private ArrayList<Combination> combinations=new ArrayList<>();
+	private ArrayList<Combination> combinations=new ArrayList<Combination>();
 			
 	//reads input from a file.
 	
@@ -29,14 +29,6 @@ public class Initialization {
 		classroom.add(room2);
 		ClassRoom room3 = new ClassRoom("LAB1", 20, true, "ComputerScience");
 		classroom.add(room3);
-//		ClassRoom room4 = new ClassRoom("LAB2", 20, true);
-//		classroom.add(room4);
-//		ClassRoom room5 = new ClassRoom("G101", 20, false);
-//		classroom.add(room5);
-//		ClassRoom room6 = new ClassRoom("H101", 20, false);
-//		classroom.add(room6);
-//		ClassRoom room6 = new ClassRoom("I101", 60, false);
-//		classroom.add(room6);
 		
 		
 		professors.add(new Professor(1, "Shruti", "IR/IRlab/DM"));
@@ -52,10 +44,7 @@ public class Initialization {
 		createLectures(professors);
 		
 		TimeTable timetb1=new TimeTable(classroom, classes);//, professors);
-		//timetb1.initialization(classroom, classes);
-		//TimeTable timetb2=new TimeTable(classroom, classes);
-		//TimeTable timetb3=new TimeTable(classroom, classes);
-				
+
 		int courseid = 1;
 		String courseName="MSc.I.T. Part I";
 		System.out.println("reading input.......");
@@ -74,10 +63,6 @@ public class Initialization {
 		course1.createStudentGroups();		
 		ArrayList<StudentGroups> studentGroups = course1.getStudentGroups();
 		timetb1.addStudentGroups(studentGroups);
-		//combinations.addAll(course1.getCombinations());
-		
-		//timetb2.addStudentGroups(studentGroups);
-		///timetb3.addStudentGroups(studentGroups);
 		subjects.clear();
 		
 		subjects.add(new Subject(8,"DM",4,false,"ComputerScience"));
@@ -93,38 +78,25 @@ public class Initialization {
 		course2.createStudentGroups();
 		studentGroups = course2.getStudentGroups();
 		timetb1.addStudentGroups(studentGroups);
-		//combinations.addAll(course2.getCombinations());
-		//timetb2.addStudentGroups(studentGroups);
-		//timetb3.addStudentGroups(studentGroups);
 		
 		System.out.println("Setting tt.......");
 		
 		System.out.println("adding tt.......");
 		timetb1.initializeTimeTable();
-		//timetb2.initializeTimeTable();
-		//timetb3.initializeTimeTable();
+		
 		timetables.add(timetb1);
-		//timetable.add(timetb2);
-		//timetable.add(timetb3);
 		
 				
 		System.out.println("populating.......");
-		
-		
 		
 		//display();
 		
 		populateTimeTable(timetb1);
 		GeneticAlgorithm ge=new GeneticAlgorithm();
 		
-		//ge.fitness(timetb1);
-//		timetb1.createTimeTableGroups(combinations);
+		
 		ge.populationAccepter(timetables);
-//		//ge.fitness(timetb2);
-		
-		//ge.fitness(timetb3);
-		
-		//populateTimeTable();
+
 	}
 	
 	public void populateTimeTable(TimeTable timetb1){
@@ -168,35 +140,7 @@ public class Initialization {
 			}
 		}
 	}
-	
-	//creates another 3 timetable objects for population by taking first yimetable and shuffling it.
-	
-//	public void populateTimeTable(){
-//		int i=0;
-//		System.out.println("populating started.......");
-//		while(i<6){
-//			TimeTable tempTimetable = timetbl;
-//			ArrayList<ClassRoom> allrooms = tempTimetable.getRoom();
-//			Iterator<ClassRoom> allroomsIterator = allrooms.iterator();
-//			while(allroomsIterator.hasNext()){
-//				ClassRoom room = allroomsIterator.next();
-//				ArrayList<Day> weekdays = room.getWeek().getWeekDays();
-//				Iterator<Day> daysIterator=weekdays.iterator();
-//				while(daysIterator.hasNext()){
-//					Day day = daysIterator.next();
-//					Collections.shuffle(day.getTimeSlot());
-//				}
-//			}
-//			timetable.add(tempTimetable);
-//			i++;
-//		}
-//		System.out.println("populating done.......");
-//		System.out.println("display called.......");
-//		display();
-//		
-//		GeneticAlgorithm.populationAccepter(timetable);
-//	}
-	
+
 	//displays all timetables
 	
 	private void display() {
